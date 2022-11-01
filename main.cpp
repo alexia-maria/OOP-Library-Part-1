@@ -240,6 +240,7 @@ switch(key) {
     M->listeaza_produse();
     delete [] buf3;
     delete p4;
+      break;
   }
 
   case 6 : {
