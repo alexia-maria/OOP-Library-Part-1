@@ -5,7 +5,7 @@ using namespace std;
 
 
 class Produs {
-    char *denumire;
+    char *denumire = nullptr;
     int pret;
 
     public :
@@ -73,6 +73,19 @@ class Produs {
       is>>p.pret;
       return is;
     }
+    
+     friend ostream &operator<<(ostream &os, const Produs &n) {
+      os<<"denumirea este "<<n.denumire<<" si pretul este "<<n.pret<<"\n";
+      return os;
+    }
+
+    bool operator==(const Produs &rhs) const {
+      return strcmp(this->denumire, rhs.denumire) == 0 && this->pret == rhs.pret;
+    }
+
+    bool operator!=(const Produs &rhs) const {
+      return !(*this == rhs);
+    }
 
 };
 
@@ -82,7 +95,6 @@ class Magazin {
 
   public :
   Magazin(int nrProduse_, Produs **produse_) {
-    cout<<"am construit\n";
     this->produse = new Produs*[nrProduse_];
     for(int i = 0; i < nrProduse_; i++) {
       this->produse[i] = produse_[i];
@@ -115,7 +127,6 @@ void adauga_Produse(Produs *prod) {
   }
   delete [] bkp;
   produse[nrProduse - 1] = prod;
-  cout<<"am adaugat elemet pe pozitia "<<nrProduse - 1 << "\n";
 }
 
   Magazin &operator+=(Produs &rhs) {
@@ -176,6 +187,7 @@ cout<<"Pentru a adauga un nou produs in baza de date a magazinului, apasati tast
 cout<<"Pentru a adauga un nou produs cu operatorul +=, apasati tasta 6\n";
 cout<<"Pentru a vedea implementarea operatorului >>(supraincarcarea opeartorilor) apasati tasta 7.\n"; 
 cout<<"In acest caz, Adaugati denumirea imediat dupa ce ati apasat tasta, iar pretul pe randul urmator : \n";
+cout<<"Pentru a vedea implementarea operatorilor == si !=, apasati tasta 8\n";
 
 cin>>key;
 switch(key) {
@@ -263,7 +275,33 @@ switch(key) {
   case 7 : {
     Produs p0;
     cin>>p0;
-    p0.afisare();
+    cout<<p0;
+    break;
+  }
+        
+   case 8 : {
+    Produs a, b, c;
+    a.setDenumire("paine");
+    a.setPret(4);
+
+    b.setDenumire("paine");
+    b.setPret(4);
+
+    c.setDenumire("paine");
+    c.setPret(5);
+
+    if(a == b) {
+      cout<<"a si b sunt egale\n";
+    } else {
+      cout<<"a si b nu sunt egale\n";
+    }
+
+    if(a != c) {
+      cout<<"a si c sunt diferite\n";
+    } else {
+      cout<<"a si c nu sunt diferite\n";
+    }
+
     break;
   }
 }
